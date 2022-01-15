@@ -130,7 +130,11 @@ export default {
             try {
                 const key = params ?? {};
                 const queryClient = await initQueryClient(rootGetters);
-                let value = (await queryClient.queryPosts()).data;
+                let value = (await queryClient.queryPosts(query)).data;
+                while (all && value.pagination && value.pagination.next_key != null) {
+                    let next_values = (await queryClient.queryPosts({ ...query, 'pagination.key': value.pagination.next_key })).data;
+                    value = mergeResults(value, next_values);
+                }
                 commit('QUERY', { query: 'Posts', key: { params: { ...key }, query }, value });
                 if (subscribe)
                     commit('SUBSCRIBE', { action: 'QueryPosts', payload: { options: { all }, params: { ...key }, query } });

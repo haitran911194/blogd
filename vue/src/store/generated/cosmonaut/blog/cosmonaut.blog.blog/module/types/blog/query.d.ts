@@ -1,5 +1,7 @@
 import { Reader, Writer } from "protobufjs/minimal";
 import { Params } from "../blog/params";
+import { PageRequest, PageResponse } from "../cosmos/base/query/v1beta1/pagination";
+import { Post } from "../blog/post";
 export declare const protobufPackage = "cosmonaut.blog.blog";
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 export interface QueryParamsRequest {
@@ -10,10 +12,14 @@ export interface QueryParamsResponse {
     params: Params | undefined;
 }
 export interface QueryPostsRequest {
+    /** Adding pagination to request */
+    pagination: PageRequest | undefined;
 }
 export interface QueryPostsResponse {
-    title: string;
-    body: string;
+    /** Returning a list of posts */
+    Post: Post[];
+    /** Adding pagination to response */
+    pagination: PageResponse | undefined;
 }
 export declare const QueryParamsRequest: {
     encode(_: QueryParamsRequest, writer?: Writer): Writer;
@@ -30,11 +36,11 @@ export declare const QueryParamsResponse: {
     fromPartial(object: DeepPartial<QueryParamsResponse>): QueryParamsResponse;
 };
 export declare const QueryPostsRequest: {
-    encode(_: QueryPostsRequest, writer?: Writer): Writer;
+    encode(message: QueryPostsRequest, writer?: Writer): Writer;
     decode(input: Reader | Uint8Array, length?: number): QueryPostsRequest;
-    fromJSON(_: any): QueryPostsRequest;
-    toJSON(_: QueryPostsRequest): unknown;
-    fromPartial(_: DeepPartial<QueryPostsRequest>): QueryPostsRequest;
+    fromJSON(object: any): QueryPostsRequest;
+    toJSON(message: QueryPostsRequest): unknown;
+    fromPartial(object: DeepPartial<QueryPostsRequest>): QueryPostsRequest;
 };
 export declare const QueryPostsResponse: {
     encode(message: QueryPostsResponse, writer?: Writer): Writer;

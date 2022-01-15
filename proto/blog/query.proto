@@ -9,6 +9,9 @@ import "blog/params.proto";
 
 option go_package = "github.com/cosmonaut/blog/x/blog/types";
 
+// Import the Post message
+import "blog/post.proto";
+
 // Query defines the gRPC querier service.
 service Query {
   // Parameters queries the parameters of the module.
@@ -33,11 +36,15 @@ message QueryParamsResponse {
 }
 
 message QueryPostsRequest {
+  // Adding pagination to request
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
 }
 
 message QueryPostsResponse {
-  string title = 1;
-  string body = 2;
+  // Returning a list of posts
+  repeated Post Post = 1;
+  // Adding pagination to response
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
 // this line is used by starport scaffolding # 3
