@@ -150,5 +150,19 @@ export class Api extends HttpClient {
             format: "json",
             ...params,
         });
+        /**
+         * No description
+         *
+         * @tags Query
+         * @name QueryPosts
+         * @summary Queries a list of Posts items.
+         * @request GET:/cosmonaut/blog/blog/posts
+         */
+        this.queryPosts = (params = {}) => this.request({
+            path: `/cosmonaut/blog/blog/posts`,
+            method: "GET",
+            format: "json",
+            ...params,
+        });
     }
 }
